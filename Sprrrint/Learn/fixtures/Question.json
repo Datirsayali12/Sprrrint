@@ -1,0 +1,14 @@
+[
+  {
+    "model": "Learn.Question",
+    "pk": 1,
+    "fields": {
+      "course": 1,
+      "questions": "Sample question text",
+      "question_image": "https://example.com/question_image.jpg",
+      "section": 1,
+      "created_at": "2024-03-02T00:00:00Z",
+      "updated_at": "2024-03-02T00:00:00Z"
+    }
+  }
+]

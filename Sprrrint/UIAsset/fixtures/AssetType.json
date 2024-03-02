@@ -1,0 +1,10 @@
+[
+  {
+    "model": "UIAsset.AssetType",
+    "pk": 1,
+    "fields": {
+      "type": "jpg",
+      "updated_at": "2024-03-02",
+      "created_at": "2024-03-02"
+    }
+  }]

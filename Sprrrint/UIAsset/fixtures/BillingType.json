@@ -1,0 +1,10 @@
+[
+  {
+    "model": "UIAsset.BillingType",
+    "pk": 1,
+    "fields": {
+      "name": "renewal",
+      "created_at": "2024-2-12",
+      "updated_at": "2024-2-12"
+    }
+  }]

@@ -1,0 +1,13 @@
+[
+  {
+    "model": "Learn.Content",
+    "pk": 1,
+    "fields": {
+      "course_hrs": 10,
+      "assignments_and_projects": 5,
+      "quizzes": 17,
+      "created_at": "2024-03-02T00:00:00Z",
+      "updated_at": "2024-03-02T00:00:00Z"
+    }
+  }
+]

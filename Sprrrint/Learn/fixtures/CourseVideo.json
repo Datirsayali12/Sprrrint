@@ -1,0 +1,13 @@
+[
+  {
+    "model": "Learn.CourseVideo",
+    "pk": 1,
+    "fields": {
+      "course_video_url": "https://example.com/course_video.mp4",
+      "section": 1,
+      "course": 1,
+      "created_at": "2024-03-02T00:00:00Z",
+      "updated_at": "2024-03-02T00:00:00Z"
+    }
+  }
+]

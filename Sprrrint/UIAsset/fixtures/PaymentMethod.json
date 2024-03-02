@@ -1,0 +1,13 @@
+[
+  {
+    "model": "UIAsset.PaymentMethod",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "card_number": 1234567890123456,
+      "expiry_date": "2024-12-31",
+      "security_code": "1234",
+      "created_at": "2024-03-02T00:00:00Z",
+      "updated_at": "2024-03-02T00:00:00Z"
+    }
+  }]

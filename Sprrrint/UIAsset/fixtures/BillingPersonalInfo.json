@@ -1,0 +1,18 @@
+[
+  {
+    "model": "UIAsset.BillingPersonalInfo",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "first_name": "John",
+      "last_name": "Doe",
+      "country": 1,
+      "address1": "123 Main St",
+      "address2": "",
+      "city": 1,
+      "state": 1,
+      "postal_code": 12345,
+      "created_at": "2024-03-02",
+      "updated_at": "2024-03-02"
+    }
+  }]

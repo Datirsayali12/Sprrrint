@@ -1,0 +1,10 @@
+[
+  {
+    "model": "Learn.Level",
+    "pk": 1,
+    "fields": {
+      "name": "begineers",
+      "created_at": "2024-03-02T00:00:00Z",
+      "updated_at": "2024-03-02T00:00:00Z"
+    }
+  }]

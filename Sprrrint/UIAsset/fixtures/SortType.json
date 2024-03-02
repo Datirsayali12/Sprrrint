@@ -1,0 +1,10 @@
+[
+  {
+    "model": "UIAsset.SortType",
+    "pk": 1,
+    "fields": {
+      "name": "popular",
+      "created_at": "2024-03-02",
+      "updated_at": "2024-03-02"
+    }
+  }]
