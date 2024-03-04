@@ -16,7 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from UIAsset import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+#     path('getproduct/',views.GetProductDetails),
+#     path('download-product/',views.download_product),
+#     path('get-subcategories/',views.get_subcategories)
 ]
