@@ -237,6 +237,13 @@ class EbookTransaction(models.Model):
     Ebook = models.ForeignKey(Ebook, on_delete=models.CASCADE, help_text="for refer Ebook")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    
+class Certificate(models.Model):
+    date = models.DateField()
+    venu = models.CharField(max_length=100)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 

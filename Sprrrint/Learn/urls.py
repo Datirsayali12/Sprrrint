@@ -15,19 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
-from UIAsset import views
+from django.urls import path
+from Learn import views
+
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('getproduct/',views.GetProductDetails),
-    path('download-product/',views.download_product),
-    path('get-subcategories/',views.get_subcategories),
-    path('get-singleproduct-detail/',views.get_singleproduct_detail),
-    path('add-to-cart/',views.add_to_cart),
-    path('get-most-downloaded',views.get_most_downloaded_products),
-    path('saved-product',views.save_for_later),
-    path('learn/',include('Learn.urls'))
+    path('get-requirments',views.get_course_requirements),
+    path('get-video-details',views.get_video_details)
     
 ]

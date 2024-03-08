@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Subcategory, Tag, ProductType, AssetType, Product, Asset, SavedProduct, ProductDownload, SortType, BillingType, BillingHistory, PaymentMethod, Country, State, City, BillingPersonalInfo, TransactionType, ProductTransaction
+from .models import *
 
 # Register your models with all fields displayed.
 @admin.register(Category)
@@ -24,11 +24,11 @@ class AssetTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'credits', 'creator', 'sub_category', 'product_type', 'created_at', 'updated_at')
+    list_display = ('title', 'credits', 'creator', 'sub_category', 'hero_img_url','product_type', 'created_at', 'updated_at')
 
 @admin.register(Asset)
 class AssetAdmin(admin.ModelAdmin):
-    list_display = ('product', 'asset', 'asset_type', 'meta_tag', 'is_hero', 'created_at', 'updated_at')
+    list_display = ('product', 'asset', 'asset_type', 'meta_tag', 'created_at', 'updated_at')
 
 @admin.register(SavedProduct)
 class SavedProductAdmin(admin.ModelAdmin):
@@ -77,3 +77,6 @@ class TransactionTypeAdmin(admin.ModelAdmin):
 @admin.register(ProductTransaction)
 class ProductTransactionAdmin(admin.ModelAdmin):
     list_display = ('credit_amount', 'debit_amount', 'tran_type', 'user', 'product', 'created_at', 'updated_at')
+    
+    
+admin.site.register(SingleAssetSaved)

@@ -66,7 +66,7 @@ class AssetType(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=255, help_text="this will store product title")
     credits = models.IntegerField(help_text="this for credits")
-    # hero_image_url = models.URLField(help_text="for product_card main image") # s3 bucket file url
+    hero_img_url = models.URLField(help_text="for product_card main image") # s3 bucket file url
     creator = models.ForeignKey(User, on_delete=models.CASCADE, help_text="this for creator of product")
     sub_category = models.ForeignKey(Subcategory, on_delete=models.CASCADE, help_text="for sub_category of product")
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE,
@@ -88,7 +88,7 @@ class Asset(models.Model):
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE,
                                    help_text='This will store file like - jpg, mp4')
     meta_tag = models.CharField(max_length=255, help_text="meta description/tag etc for seo")
-    is_hero = models.BooleanField(help_text="to check if asset is hero image or video")
+    #is_hero = models.BooleanField(help_text="to check if asset is hero image or video")
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
 
@@ -210,6 +210,7 @@ class ProductTransaction(models.Model):
                                 help_text="for refer product", )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
 # -----------------------------------------
 
 
