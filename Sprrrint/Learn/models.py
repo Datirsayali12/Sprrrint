@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db import models
 
-from UIAsset.models import Subcategory, Asset, Product, TransactionType
+from UIAsset.models import Subcategory, Asset, Product, TransactionType,Category
 
 
 # Create your models here.
@@ -16,7 +16,7 @@ class Video(models.Model):
     hero_video_url = models.URLField()
     overview = models.TextField(help_text="for video overview")
     creator = models.ForeignKey(User, on_delete=models.CASCADE, help_text="for video creator")
-    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, help_text="for subcategory")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, help_text="for category")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -68,7 +68,7 @@ class Level(models.Model):
 
 class Content(models.Model):
     course_hrs = models.IntegerField(help_text="for course hours")
-    assignments_and_projects = models.IntegerField(help_text="for number of courses")
+    assignments_and_projects = models.IntegerField(help_text="for total number of assignment_and_projects")
     quizzes = models.IntegerField(help_text="for number of quizzes")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -80,8 +80,7 @@ class Course(models.Model):
     course_lesson = models.IntegerField(help_text="for number of course lesson ")
     creator = models.ForeignKey(User, on_delete=models.CASCADE, help_text="for course creator")
     long_desc = models.TextField(help_text="for course long description")
-    hero_video_url = models.URLField(help_text="for course_card main video")
-    sub_category = models.ForeignKey(Subcategory, on_delete=models.CASCADE, help_text="for course subcategory")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, help_text="for course category")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     content = models.ForeignKey(Content, on_delete=models.CASCADE, help_text="For content of course")
@@ -106,9 +105,11 @@ class CourseVideo(models.Model):
     course_video_url = models.URLField(max_length=200)
     section = models.ForeignKey(Section, on_delete=models.CASCADE,
                                 help_text="for refer to which course section related")
+    is_hero_video= models.BooleanField(help_text="is course video is on main card video")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, help_text="refer to  course video is belongs")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    is_free=models.BooleanField(help_text="if video is free or not")
 
 
 class WatchedVideo(models.Model):
@@ -120,6 +121,7 @@ class WatchedVideo(models.Model):
 
 
 class Resource(models.Model):
+    video=models.ForeignKey(Video,on_delete=models.CASCADE, help_text="refer to particular video")
     file = models.URLField(max_length=200)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -131,9 +133,9 @@ class Ebook(models.Model):
     no_of_pages = models.IntegerField(help_text="for number of pages in Ebook")
     description = models.TextField(max_length=255, help_text="for Ebook description")
     creator = models.ForeignKey(User, on_delete=models.CASCADE, help_text="for creator of Ebook")
-    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, help_text="For subcategory of Ebook")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, help_text="For subcategory of Ebook")
     # asset = models.ForeignKey(Asset, on_delete=models.CASCADE,help_text="for store Ebook images")
-    # content=models.ForeignKey(Content, on_delete=models.CASCADE,help_text="For content of course")
+    content=models.ForeignKey(Content, on_delete=models.CASCADE,help_text="For content of course")
     ebook_desc = models.TextField(max_length=200, help_text="ebook description")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -224,8 +226,12 @@ class Answer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
-
+class SavedEbook(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,help_text="refer to user")
+    ebook = models.ForeignKey(Ebook, on_delete=models.CASCADE,help_text="refer to course")
+    created_at = models.DateField(auto_now_add=True)
+    updated_at = models.DateField(auto_now=True)
+    
 
 class EbookTransaction(models.Model):
     credit_amount = models.DecimalField(max_digits=10, decimal_places=2, help_text="for credit amount for course")

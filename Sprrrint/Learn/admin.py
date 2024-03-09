@@ -4,7 +4,7 @@ from .models import *
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ['title', 'overview', 'hero_video_url', 'creator', 'subcategory', 'created_at', 'updated_at']
+    list_display = ['title', 'overview', 'creator','category', 'created_at', 'updated_at']
 
 
 @admin.register(Like)
@@ -39,7 +39,7 @@ class ContentAdmin(admin.ModelAdmin):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['name', 'short_desc', 'creator', 'long_desc', 'sub_category', 'created_at', 'updated_at',
+    list_display = ['name', 'short_desc', 'creator', 'long_desc', 'category', 'created_at', 'updated_at',
                     'course_level']
 
 
@@ -65,7 +65,7 @@ class ResourceAdmin(admin.ModelAdmin):
 
 @admin.register(Ebook)
 class EbookAdmin(admin.ModelAdmin):
-    list_display = ['no_of_chapters', 'no_of_pages', 'description', 'creator', 'subcategory', 'ebook_desc',
+    list_display = ['no_of_chapters', 'no_of_pages', 'description', 'creator', 'category', 'ebook_desc',
                     'created_at', 'updated_at', 'level']
 
 

@@ -8,16 +8,10 @@ from django.db import models
 from django.db import models
 from django.contrib.auth.models import User
 
-
-# from Learn.models import Course,Video,Ebook
-
-
-# Create your models here.
-
 # -----------------For product---------------------------------
 
-class Category(models.Model):  # Changed to inherit from models.Model
-    name = models.CharField(max_length=255, unique=True, help_text="this will store category name")
+class Category(models.Model): 
+    name = models.CharField(max_length=255, unique=True, help_text="this store category name")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -25,9 +19,9 @@ class Category(models.Model):  # Changed to inherit from models.Model
         return self.name
 
 
-class Subcategory(models.Model):  # Changed to inherit from models.Model
+class Subcategory(models.Model):  
     name = models.CharField(max_length=255, help_text="this will store sub category name")
-    categories = models.ManyToManyField(Category)  # Corrected ManyToManyField to ManyToManyField
+    categories = models.ManyToManyField(Category,help_text="manyTOmany field with subcategory") 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -66,15 +60,16 @@ class AssetType(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=255, help_text="this will store product title")
     credits = models.IntegerField(help_text="this for credits")
-    hero_img_url = models.URLField(help_text="for product_card main image") # s3 bucket file url
+   # hero_img_url = models.URLField(help_text="for product_card main image") # s3 bucket file url
     creator = models.ForeignKey(User, on_delete=models.CASCADE, help_text="this for creator of product")
-    sub_category = models.ForeignKey(Subcategory, on_delete=models.CASCADE, help_text="for sub_category of product")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, help_text="for category of product")
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE,
                                      help_text="for type of product i.e single ,pack")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    tag = models.ManyToManyField(Tag)
-    no_of_items = models.IntegerField()
+    tag = models.ManyToManyField(Tag,help_text="for tag name of product")
+    no_of_items = models.IntegerField(help_text="number of items in product")
+    is_free=models.BooleanField(help_text="if product free or paid")
     
 
     def __str__(self):
@@ -88,7 +83,7 @@ class Asset(models.Model):
     asset_type = models.ForeignKey(AssetType, on_delete=models.CASCADE,
                                    help_text='This will store file like - jpg, mp4')
     meta_tag = models.CharField(max_length=255, help_text="meta description/tag etc for seo")
-    #is_hero = models.BooleanField(help_text="to check if asset is hero image or video")
+    is_hero_img= models.BooleanField(help_text="to check if asset is hero image or video")
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
 
@@ -99,6 +94,15 @@ class SavedProduct(models.Model):
                                 help_text="this refers particular product that saved")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+    
+class SavedSingleAsset(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="this refer particular user that saved items")
+    asset = models.ForeignKey(Asset, on_delete=models.CASCADE,
+                                help_text="this refers particular product that saved")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
 
 
 class ProductDownload(models.Model):
@@ -106,8 +110,14 @@ class ProductDownload(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, help_text="refer to product that download")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-
+    
+class AssetDownload(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="refer to user that download product")
+    asset= models.ForeignKey(Asset, on_delete=models.CASCADE, help_text="refer to Asset that download")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    
 class SortType(models.Model):
     name = models.CharField(max_length=100, help_text="for type of sort like relevant, popular etc.")
     created_at = models.DateTimeField(auto_now_add=True)

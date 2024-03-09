@@ -78,10 +78,6 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
-    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'sprint1',
         'USER': 'postgres',
@@ -91,7 +87,7 @@ DATABASES = {
     },
     'products': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sprint2',
+        'NAME': 'sprintcopy',
         'USER': 'postgres',
         'PASSWORD': 'root',
         'HOST': 'localhost',

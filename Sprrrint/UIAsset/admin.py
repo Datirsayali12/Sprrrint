@@ -24,7 +24,7 @@ class AssetTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title', 'credits', 'creator', 'sub_category', 'hero_img_url','product_type', 'created_at', 'updated_at')
+    list_display = ('title', 'credits', 'creator', 'category','product_type', 'created_at', 'updated_at')
 
 @admin.register(Asset)
 class AssetAdmin(admin.ModelAdmin):
@@ -79,4 +79,4 @@ class ProductTransactionAdmin(admin.ModelAdmin):
     list_display = ('credit_amount', 'debit_amount', 'tran_type', 'user', 'product', 'created_at', 'updated_at')
     
     
-admin.site.register(SingleAssetSaved)
+admin.site.register(SavedSingleAsset)
