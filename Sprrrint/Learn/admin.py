@@ -4,7 +4,7 @@ from .models import *
 
 @admin.register(Video)
 class VideoAdmin(admin.ModelAdmin):
-    list_display = ['title', 'overview', 'hero_video_url', 'creator', 'subcategory', 'created_at', 'updated_at']
+    list_display = ['title', 'overview', 'creator', 'category', 'created_at', 'updated_at']
 
 
 @admin.register(Like)
@@ -39,7 +39,7 @@ class ContentAdmin(admin.ModelAdmin):
 
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['name', 'short_desc', 'creator', 'long_desc', 'sub_category', 'created_at', 'updated_at',
+    list_display = ['name', 'short_desc', 'creator', 'long_desc', 'category', 'created_at', 'updated_at',
                     'course_level']
 
 
@@ -65,7 +65,7 @@ class ResourceAdmin(admin.ModelAdmin):
 
 @admin.register(Ebook)
 class EbookAdmin(admin.ModelAdmin):
-    list_display = ['no_of_chapters', 'no_of_pages', 'description', 'creator', 'subcategory', 'ebook_desc',
+    list_display = ['no_of_chapters', 'no_of_pages', 'description', 'creator', 'category', 'ebook_desc',
                     'created_at', 'updated_at', 'level']
 
 
@@ -98,18 +98,22 @@ class CourseTransactionAdmin(admin.ModelAdmin):
 class EbookTransactionAdmin(admin.ModelAdmin):
     list_display = ['credit_amount', 'debit_amount', 'tran_type', 'user', 'Ebook', 'created_at', 'updated_at']
 
+
 @admin.register(SavedCourse)
 class SavedCourseAdmin(admin.ModelAdmin):
     list_display = ('user', 'course', 'created_at', 'updated_at')
+
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('course', 'questions', 'question_image', 'section')
 
+
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ('question', 'answer', 'is_correct')
-    
+
+
 @admin.register(Certificate)
 class CertificateAdmin(admin.ModelAdmin):
     list_display = ('date', 'venu', 'course', 'user')

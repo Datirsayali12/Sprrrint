@@ -78,20 +78,8 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
-    'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sprint1',
-        'USER': 'postgres',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    },
-    'products': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sprint2',
+        'NAME': 'sprintAPI',
         'USER': 'postgres',
         'PASSWORD': 'root',
         'HOST': 'localhost',
