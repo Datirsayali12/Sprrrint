@@ -79,20 +79,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sprint1',
-        'USER': 'postgres',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    },
-    'products': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'sprintcopy',
+        'NAME': 'sprint',
         'USER': 'postgres',
         'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '5432',
     }
+    # },
+    # 'products': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'sprintcopy',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'root',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    # }
 }
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
