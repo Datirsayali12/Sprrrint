@@ -4,6 +4,7 @@ from django.db import models
 
 from django.contrib.auth.models import User
 from django.db import models
+from django.conf import settings
 
 from UIAsset.models import Subcategory, Asset, Product, TransactionType,Category
 
@@ -15,7 +16,7 @@ class Video(models.Model):
     title = models.CharField(max_length=255, help_text="for video title")
     hero_video_url = models.URLField()
     overview = models.TextField(help_text="for video overview")
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, help_text="for video creator")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="for video creator")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, help_text="for category")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -25,7 +26,7 @@ class Video(models.Model):
 
 
 class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="for refer user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="for refer user")
     video = models.ForeignKey(Video, on_delete=models.CASCADE, help_text="for refer particular video")
     is_liked = models.BooleanField(help_text="is_liked or not")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -33,7 +34,7 @@ class Like(models.Model):
 
 
 class Dislike(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="for refer particular user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="for refer particular user")
     video = models.ForeignKey(Video, on_delete=models.CASCADE, help_text="for refer video")
     is_disliked = models.BooleanField(help_text="is_disliked or not")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -41,7 +42,7 @@ class Dislike(models.Model):
 
 
 class Share(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="for refer particular user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="for refer particular user")
     video = models.ForeignKey(Video, on_delete=models.CASCADE, help_text="for refer video")
     is_shared = models.BooleanField(help_text="is_shared or not")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -78,7 +79,7 @@ class Course(models.Model):
     name = models.CharField(max_length=255, help_text="for course name")
     short_desc = models.TextField(help_text="for course short description")
     course_lesson = models.IntegerField(help_text="for number of course lesson ")
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, help_text="for course creator")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="for course creator")
     long_desc = models.TextField(help_text="for course long description")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, help_text="for course category")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -115,7 +116,7 @@ class CourseVideo(models.Model):
 class WatchedVideo(models.Model):
     video = models.ForeignKey(CourseVideo, on_delete=models.CASCADE, help_text="refer to courseVideo")
     is_completed = models.BooleanField(default=False, help_text="is course completed or not (True and False)")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="refer to particular user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="refer to particular user")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -132,7 +133,7 @@ class Ebook(models.Model):
     no_of_chapters = models.IntegerField(help_text="for number of chapters in Ebook")
     no_of_pages = models.IntegerField(help_text="for number of pages in Ebook")
     description = models.TextField(max_length=255, help_text="for Ebook description")
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, help_text="for creator of Ebook")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="for creator of Ebook")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, help_text="For subcategory of Ebook")
     # asset = models.ForeignKey(Asset, on_delete=models.CASCADE,help_text="for store Ebook images")
     content=models.ForeignKey(Content, on_delete=models.CASCADE,help_text="For content of course")
@@ -166,7 +167,7 @@ class Requirement(models.Model):
 
 
 class CourseReview(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="refer to user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="refer to user")
     text = models.CharField(max_length=255, help_text="for course review description")
     rating = models.IntegerField(help_text="for course ratings")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True, help_text="refer to course")
@@ -175,7 +176,7 @@ class CourseReview(models.Model):
 
 
 class EbookReview(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="refer to user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="refer to user")
     text = models.CharField(max_length=255, help_text="for course review description")
     rating = models.IntegerField(help_text="for course ratings")
     ebook = models.ForeignKey(Ebook, on_delete=models.CASCADE, null=True, blank=True, help_text="for refer Ebook")
@@ -184,7 +185,7 @@ class EbookReview(models.Model):
 
 
 class UserWallet(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, help_text="for refer user")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="for refer user")
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, help_text="for user balance in wallet")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -196,7 +197,7 @@ class CourseTransaction(models.Model):
                                        help_text="for debit amount record for debit transaction")
     tran_type = models.ForeignKey(TransactionType, on_delete=models.CASCADE,
                                   help_text="refer transaction type i.e purchase ,sale etc.")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="refer particular user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="refer particular user")
     course = models.ForeignKey(Course, on_delete=models.CASCADE, help_text="for refer course")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -204,7 +205,7 @@ class CourseTransaction(models.Model):
 
 
 class SavedCourse(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,help_text="refer to user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,help_text="refer to user")
     course = models.ForeignKey(Course, on_delete=models.CASCADE,help_text="refer to course")
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
@@ -227,7 +228,7 @@ class Answer(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 class SavedEbook(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE,help_text="refer to user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,help_text="refer to user")
     ebook = models.ForeignKey(Ebook, on_delete=models.CASCADE,help_text="refer to course")
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
@@ -239,7 +240,7 @@ class EbookTransaction(models.Model):
                                        help_text="for debit amount record for debit course")
     tran_type = models.ForeignKey(TransactionType, on_delete=models.CASCADE,
                                   help_text="refer transaction type i.e purchase ,sale etc.")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="refer particular user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="refer particular user")
     Ebook = models.ForeignKey(Ebook, on_delete=models.CASCADE, help_text="for refer Ebook")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -249,7 +250,7 @@ class Certificate(models.Model):
     date = models.DateField()
     venu = models.CharField(max_length=100)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 

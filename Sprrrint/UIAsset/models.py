@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 
@@ -61,7 +62,7 @@ class Product(models.Model):
     title = models.CharField(max_length=255, help_text="this will store product title")
     credits = models.IntegerField(help_text="this for credits")
    # hero_img_url = models.URLField(help_text="for product_card main image") # s3 bucket file url
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, help_text="this for creator of product")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="this for creator of product")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, help_text="for category of product")
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE,
                                      help_text="for type of product i.e single ,pack")
@@ -89,7 +90,7 @@ class Asset(models.Model):
 
 
 class SavedProduct(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="this refer particular user that saved items")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="this refer particular user that saved items")
     product = models.ForeignKey(Product, on_delete=models.CASCADE,
                                 help_text="this refers particular product that saved")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -97,7 +98,7 @@ class SavedProduct(models.Model):
     
     
 class SavedSingleAsset(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="this refer particular user that saved items")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="this refer particular user that saved items")
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE,
                                 help_text="this refers particular product that saved")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -106,13 +107,13 @@ class SavedSingleAsset(models.Model):
 
 
 class ProductDownload(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="refer to user that download product")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="refer to user that download product")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, help_text="refer to product that download")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
 class AssetDownload(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="refer to user that download product")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="refer to user that download product")
     asset= models.ForeignKey(Asset, on_delete=models.CASCADE, help_text="refer to Asset that download")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -142,13 +143,13 @@ class BillingHistory(models.Model):
     billing_type = models.ForeignKey(BillingType, on_delete=models.CASCADE, help_text="refer to billingType table")
     amount = models.FloatField(help_text="for billing amount")
     invoice = models.URLField(help_text="for Invoice PDFs")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="refer to user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="refer to user")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
 class PaymentMethod(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="for refer user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="for refer user")
     card_number = models.BigIntegerField(help_text="for card number")
     expiry_date = models.DateField(help_text="for card expiary date")
     security_code = models.CharField(max_length=4, help_text="cvv code")
@@ -186,7 +187,7 @@ class City(models.Model):
 
 
 class BillingPersonalInfo(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, help_text="for refer user")
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="for refer user")
     first_name = models.CharField(max_length=100, help_text="for first name")
     last_name = models.CharField(max_length=100, help_text="for last name")
     country = models.ForeignKey(Country, on_delete=models.CASCADE, help_text="for country name")
@@ -215,7 +216,7 @@ class ProductTransaction(models.Model):
                                        help_text="for debit amount record for product")
     tran_type = models.ForeignKey(TransactionType, on_delete=models.CASCADE,
                                   help_text="refer transaction type i.e purchase ,sale etc.")
-    user = models.ForeignKey(User, on_delete=models.CASCADE, help_text="refer particular user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, help_text="refer particular user")
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True,
                                 help_text="for refer product", )
     created_at = models.DateTimeField(auto_now_add=True)
