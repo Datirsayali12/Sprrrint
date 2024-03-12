@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import PermissionsMixin
 
 from django.db import models
 from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
@@ -37,7 +38,7 @@ class UserManager(BaseUserManager):
       return user
 
 #  Custom User Model
-class User(AbstractBaseUser):
+class User(AbstractBaseUser,PermissionsMixin):
   email = models.EmailField(
       verbose_name='Email',
       max_length=255,
