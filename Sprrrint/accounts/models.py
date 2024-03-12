@@ -1,32 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# class Profile(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     bio = models.CharField(max_length=255)
-#     user_image = models.URLField()
-#     is_pro = models.BooleanField(default=False)
-#
-#     def __str__(self):
-#         return f"{self.user.username}'s Profile"
-#
-# class BillingPersonalInfo(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     country = models.CharField(max_length=100)
-#     address1 = models.TextField()
-#     address2 = models.TextField(blank=True, null=True)
-#     city = models.CharField(max_length=100)
-#     postal_code = models.IntegerField()
-#
-# class UserSelection(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     profession = models.CharField(max_length=100)
-#     preference = models.CharField(max_length=100)
-#     experience = models.CharField(max_length=100)
-#
-#     def __str__(self):
-#         return f"Selection for User: {self.user.username}"
-
 from django.db import models
 from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
 
@@ -34,7 +8,7 @@ from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
 class UserManager(BaseUserManager):
   def create_user(self, email, name,password=None, password2=None):
       """
-      Creates and saves a User with the given email, name, tc and password.
+      Creates and saves a User with the given email, name and password.
       """
       if not email:
           raise ValueError('User must have an email address')
@@ -50,7 +24,7 @@ class UserManager(BaseUserManager):
 
   def create_superuser(self, email, name,password=None):
       """
-      Creates and saves a superuser with the given email, name, tc and password.
+      Creates and saves a superuser with the given email, name and password.
       """
       user = self.create_user(
           email,
@@ -74,6 +48,8 @@ class User(AbstractBaseUser):
   is_admin = models.BooleanField(default=False)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
+  is_seller=models.BooleanField(default=True)
+  is_customer=models.BooleanField(default=False)
 
   objects = UserManager()
 
@@ -98,6 +74,29 @@ class User(AbstractBaseUser):
       "Is the user a member of staff?"
       # Simplest possible answer: All admins are staff
       return self.is_admin
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.CharField(max_length=255)
+    user_image = models.URLField()
+    is_pro = models.BooleanField(default=False)
+
+class Creator(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    mobile=models.IntegerField()
+
+
+
+class UserSelection(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profession = models.CharField(max_length=100)
+    preference = models.CharField(max_length=100)
+    experience = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"Selection for User: {self.user.username}"
+
+
 
 
 
