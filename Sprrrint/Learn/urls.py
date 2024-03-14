@@ -21,7 +21,13 @@ from Learn import views
 
 
 urlpatterns = [
-    path('get-requirments/',views.get_course_requirements),
-    path('get-video-details/<int:id>',views.get_video_details)
+    path('get-requirments/<int:course_id>',views.get_course_requirements),
+    path('get-video-details/<int:video_id>',views.get_video_details),
+    path('get-ebook/<int:ebook_id>',views.get_ebook),
+    path('save-ebook/', views.save_ebook),
+    path('get-course/<int:course_id>', views.get_course_details),
+    path('get-course-review/<int:course_id>',views.get_course_reviews),
+    path('get-ebook-review/<int:ebook_id>',views.get_ebook_reviews)
+
     
 ]

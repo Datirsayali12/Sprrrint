@@ -4,16 +4,68 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import JsonResponse
+from django.core.exceptions import ObjectDoesNotExist
+from Learn.models import Video,Ebook,Course
 
 # Create your views here.
 
-@api_view(["GET"])
-def GetProductDetails(request):
+@api_view(['GET'])
+def GetProductDetails(request, category_id):
     if request.method == "GET":
-        category_name = request.GET.get("category_name")
+        category = Category.objects.get(id=category_id)
+        category_name = category.name.lower()
 
-        try:
-            category = Category.objects.get(name=category_name)
+        if category_name == "video":
+            videos = Video.objects.filter(category=category)
+            serialized_data = []
+            for video in videos:
+                serialized_product = {
+                    "title": video.title,
+                    "overview": video.overview,
+                    "creator": video.creator.id,
+                    "category": video.category.id,
+                    "created_at": video.created_at,
+                    "updated_at": video.updated_at,
+                }
+                serialized_data.append(serialized_product)
+            return Response(serialized_data, status=status.HTTP_200_OK)
+
+        elif category_name == "course":
+            courses = Course.objects.filter(category=category)
+            serialized_data = []
+            for course in courses:
+                serialized_product = {
+                    "course_name": course.course_name,
+                    "course_short_desc": course.course_short_desc,
+                    "creator": course.creator.id,
+                    "category": course.category.id,
+                    "created_at": course.created_at,
+                    "updated_at": course.updated_at,
+                }
+                serialized_data.append(serialized_product)
+            return Response(serialized_data, status=status.HTTP_200_OK)
+
+        elif category_name == "ebook":
+            ebooks = Ebook.objects.filter(category=category)
+            serialized_data = []
+            for ebook in ebooks:
+                serialized_product = {
+                    "name": ebook.name,
+                    "no_of_chapters": ebook.no_of_chapters,
+                    "no_of_pages": ebook.no_of_pages,
+                    "description": ebook.description,
+                    "creator": ebook.creator.id,
+                    "category": ebook.category.id,
+                    "created_at": ebook.created_at,
+                    "updated_at": ebook.updated_at,
+                    "ebook_desc": ebook.ebook_desc,
+                    "level": ebook.level.id,
+                }
+                serialized_data.append(serialized_product)
+            return Response(serialized_data, status=status.HTTP_200_OK)
+
+        else:
+            # Filter products based on category and is_pack
             products = Product.objects.filter(category=category)
 
             serialized_data = []
@@ -34,8 +86,7 @@ def GetProductDetails(request):
                 serialized_data.append(serialized_product)
 
             return Response(serialized_data, status=status.HTTP_200_OK)
-        except Category.DoesNotExist:
-            return Response({"message": "Category not found"}, status=status.HTTP_404_NOT_FOUND)
+
 
 @api_view(['POST'])
 def download_product(request):
@@ -59,7 +110,7 @@ def get_subcategories(request):
         return Response({"search_result": subcategory_list})
         
 @api_view(["GET"])
-def get_singleproduct_detail(request, product_id):
+def get_singleproduct(request, product_id):
     try:
         product = Product.objects.get(id=product_id)
         serialized_product = {
@@ -75,31 +126,10 @@ def get_singleproduct_detail(request, product_id):
             "no_of_items": product.no_of_items,
             "is_free": product.is_free
         }
-        return Response(serialized_product, status=status.HTTP_200_OK)
-    except Product.DoesNotExist:
-        return Response({"message": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+        return JsonResponse(serialized_product, status=200)
+    except  ObjectDoesNotExist:
+        return JsonResponse({"message": "Product not found"}, status=404)
 
-
-# @api_view(['GET'])
-# def get_most_downloaded_products(request):
-#     if request.method == 'GET':
-#         most_downloaded_product_ids = ProductDownload.objects.values('product_id').annotate(download_count=models.Count('product_id')).order_by('-download_count')[:10]
-#         search_results = []
-#         for product_info in most_downloaded_product_ids:
-#             product_id = product_info['product_id']
-#             product = Product.objects.get(pk=product_id)
-#             search_results.append({
-#                 'title': product.title,
-#                 'credits': product.credits,
-#                 'hero_img_url': product.hero_img_url,
-#                 'created_at': product.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-#                 'updated_at': product.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
-#                 'no_of_items': product.no_of_items
-#             })
-#
-#         return JsonResponse({'search_result': search_results}, status=200)
-#
-#     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 
 @api_view(['POST'])
