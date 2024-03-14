@@ -80,26 +80,26 @@ def get_singleproduct_detail(request, product_id):
         return Response({"message": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
-@api_view(['GET'])      
-def get_most_downloaded_products(request):
-    if request.method == 'GET':
-        most_downloaded_product_ids = ProductDownload.objects.values('product_id').annotate(download_count=models.Count('product_id')).order_by('-download_count')[:10]
-        search_results = []
-        for product_info in most_downloaded_product_ids:
-            product_id = product_info['product_id']
-            product = Product.objects.get(pk=product_id)
-            search_results.append({
-                'title': product.title,
-                'credits': product.credits,
-                'hero_img_url': product.hero_img_url,
-                'created_at': product.created_at.strftime('%Y-%m-%d %H:%M:%S'),
-                'updated_at': product.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
-                'no_of_items': product.no_of_items
-            })
-
-        return JsonResponse({'search_result': search_results}, status=200)
-
-    return JsonResponse({'error': 'Invalid request method'}, status=400)
+# @api_view(['GET'])
+# def get_most_downloaded_products(request):
+#     if request.method == 'GET':
+#         most_downloaded_product_ids = ProductDownload.objects.values('product_id').annotate(download_count=models.Count('product_id')).order_by('-download_count')[:10]
+#         search_results = []
+#         for product_info in most_downloaded_product_ids:
+#             product_id = product_info['product_id']
+#             product = Product.objects.get(pk=product_id)
+#             search_results.append({
+#                 'title': product.title,
+#                 'credits': product.credits,
+#                 'hero_img_url': product.hero_img_url,
+#                 'created_at': product.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+#                 'updated_at': product.updated_at.strftime('%Y-%m-%d %H:%M:%S'),
+#                 'no_of_items': product.no_of_items
+#             })
+#
+#         return JsonResponse({'search_result': search_results}, status=200)
+#
+#     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
 
 @api_view(['POST'])

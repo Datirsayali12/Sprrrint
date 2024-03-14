@@ -46,19 +46,17 @@ def get_course_requirements(request):
 
 
 @api_view(['GET'])
-def get_video_details(request):
-    video_id = request.GET.get('video_id')
+def get_video_details(request,id):
+    video = Video.objects.get(pk=id)
     try:
-        video = Video.objects.get(pk=video_id)
         video_details = {
-            'video_title': video.video_title,
+            'title': video.title,
             'asset': video.hero_video_url,
-            'video_overview': video.video_overview,
-            'resource_id': video.pk,
-            'creator_id': video.creator_id,
-            'total_likes': video.total_likes,
-            'total_dislikes': video.total_dislikes,
-            'total_shares': video.total_shares
+            'overview': video.overview,
+            'creator': video.creator,
+            'category': video.category,
+            'created_at': video.created_at,
+            'updated_at': video.updated_at,
         }
         return Response(video_details)
     except Video.DoesNotExist:

@@ -21,7 +21,7 @@ from Learn import views
 
 
 urlpatterns = [
-    path('get-requirments',views.get_course_requirements),
-    path('get-video-details',views.get_video_details)
+    path('get-requirments/',views.get_course_requirements),
+    path('get-video-details/<int:id>',views.get_video_details)
     
 ]
