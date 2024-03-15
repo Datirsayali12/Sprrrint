@@ -112,6 +112,7 @@ def get_subcategories(request):
 @api_view(["GET"])
 def get_singleproduct(request, product_id):
     try:
+
         product = Product.objects.get(id=product_id)
         serialized_product = {
             "product_id": product.id,
@@ -124,11 +125,34 @@ def get_singleproduct(request, product_id):
             "updated_at": product.updated_at,
             "tags": [{"tag_id": tag.id, "tag_name": tag.name} for tag in product.tag.all()],
             "no_of_items": product.no_of_items,
-            "is_free": product.is_free
+            "is_free": product.is_free,
+
         }
+
         return JsonResponse(serialized_product, status=200)
     except  ObjectDoesNotExist:
         return JsonResponse({"message": "Product not found"}, status=404)
+
+@api_view(["GET"])
+def get_product_contain_imgaes(request,product_id):
+    assets = Asset.objects.filter(product_id=product_id)
+
+    # Prepare data
+    asset_list = []
+    for asset in assets:
+        asset_data = {
+            'product_id': asset.product_id,
+            'asset': asset.asset,
+            'asset_type': asset.asset_type_id,
+            'meta_tag': asset.meta_tag,
+            'is_hero_img': asset.is_hero_img,
+            'created_at': asset.created_at,
+            'updated_at': asset.updated_at
+        }
+        asset_list.append(asset_data)
+
+    return JsonResponse({'assets': asset_list})
+
 
 
 

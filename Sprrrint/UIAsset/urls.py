@@ -8,7 +8,7 @@ urlpatterns=[
     path('download-product/',views.download_product),
     path('get-subcategories/',views.get_subcategories),
     path('get-singleproduct/<int:product_id>',views.get_singleproduct, name='product_detail'),
-    #path('add-to-cart/',views.add_to_cart),
+    path('get-contain-images/<int:product_id>',views.get_product_contain_imgaes),
     #path('get-most-downloaded',views.get_most_downloaded_products),
     path('saved-product/',views.save_for_later),
 
